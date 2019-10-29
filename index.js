@@ -52,12 +52,12 @@ module.exports = function(pugs, dir, options = {}) {
 		${module === true ? `export default ` : ``}function ${name}(name, locals, string = false) {
 			${pugFunction}
 
-			const html = template(Object.assign({__pug_template_name: name}, locals));
+			const __html = template(Object.assign({__pug_template_name: name}, locals));
 			if (string) {
-				return html;
+				return __html;
 			} else {
 				const templateElem = document.createElement('template');
-				templateElem.innerHTML = html;
+				templateElem.innerHTML = __html;
 				return templateElem.content;
 			}
 		}
