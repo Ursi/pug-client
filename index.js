@@ -144,6 +144,9 @@ module.exports = function(pugs, dir, options = {}) {
 						frag = template.content,
 						miniDom = new MiniDom(frag);
 
+					for (let child of frag.children)
+						child.dataset.template = name;
+
 					new MutationObserver(records => {
 						if (!records[0].target.children.length && name in scripts)
 							scripts[name].call(miniDom, locals);
