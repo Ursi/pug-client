@@ -4,6 +4,7 @@ module.exports = function(pugs, dir, options = {}) {
 		{
 			name = `pug`,
 			module = false,
+			attribute = true,
 		} = options,
 		compileClientOptions = Object.assign({
 			filename: `Pug`,
@@ -144,8 +145,14 @@ module.exports = function(pugs, dir, options = {}) {
 						frag = template.content,
 						miniDom = new MiniDom(frag);
 
-					for (let child of frag.children)
-						child.dataset.template = name;
+					${
+						attribute ?
+							`
+								for (let child of frag.children)
+									child.dataset.template = name;
+							` :
+							``
+					}
 
 					new MutationObserver(records => {
 						if (!records[0].target.children.length && name in scripts)
