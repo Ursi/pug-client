@@ -21,8 +21,8 @@ module.exports = function(pugs, dir, options = {}) {
 			if (scriptMatch) {
 				pugObj.purePug = pugObj.pug.slice(0, scriptMatch.index);
 				pugObj.script = pugObj.pug.slice(scriptMatch.index)
-					.replace(/--\s*(\(.*?\))/s, `function$1 {`) // --(...)
-					.replace(/--.*/, `function(){`) + // --
+					.replace(/--\s*(\(.*?\))/s, `async function$1 {`) // --(...)
+					.replace(/--.*/, `async function(){`) + // --
 					`}`;
 			} else pugObj.purePug = pugObj.pug;
 
