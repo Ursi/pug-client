@@ -169,6 +169,7 @@ module.exports = function(pugs, dir, options = {}) {
 						this.getAttribute('name'),
 						JSON.parse(this.getAttribute('locals'))
 					));
+
 					this.remove();
 				}
 			});
