@@ -1,4 +1,7 @@
-const pug = require(`pug`);
+const
+	pug = require(`pug`),
+	undIds = require(`undeclared-identifiers`);
+
 module.exports = function(pugs, dir, options = {}) {
 	const
 		{
@@ -21,10 +24,16 @@ module.exports = function(pugs, dir, options = {}) {
 			const scriptMatch = pugObj.pug.match(/(\r|\n)+--|^--/);
 			if (scriptMatch) {
 				pugObj.purePug = pugObj.pug.slice(0, scriptMatch.index);
-				pugObj.script = pugObj.pug.slice(scriptMatch.index)
-					.replace(/--\s*(\(.*?\))/s, `async function$1 {`) // --(...)
-					.replace(/--.*/, `async function(){`) + // --
-					`}`;
+				let script = pugObj.pug.slice(scriptMatch.index + scriptMatch[0].length);
+				for (let undId of undIds(script))
+					script = `
+						if (!('${undId}' in locals || '${undId}' in globalThis))
+							throw "'${undId}' has not been passed into '${pugObj.name}'"
+						let ${undId} = '${undId}' in locals ? locals.${undId} : globalThis.${undId};
+					` + script;
+
+				pugObj.script = `async function(locals = {}) {${script}}`
+				console.log(pugObj.script);
 			} else pugObj.purePug = pugObj.pug;
 
 			templatesString += `

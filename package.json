@@ -13,7 +13,8 @@
   "author": "Mason Mackaman",
   "license": "ISC",
   "dependencies": {
-    "pug": "^2.0.4"
+    "pug": "^2.0.4",
+    "undeclared-identifiers": "github:Ursi/js-undeclared-identifiers"
   },
   "devDependencies": {},
   "repository": {
