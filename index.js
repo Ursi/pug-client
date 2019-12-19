@@ -180,10 +180,11 @@ module.exports = function(pugs, dir, options = {}) {
 							``
 					}
 
-					new MutationObserver(records => {
-						if (!records[0].target.children.length && name in scripts)
-							scripts[name].call(miniDom, locals);
-					}).observe(frag, {childList: true});
+					if (name in scripts)
+						new MutationObserver(records => {
+							if (!records[0].target.children.length)
+								scripts[name].call(miniDom, locals);
+						}).observe(frag, {childList: true});
 
 					return frag;
 				}
