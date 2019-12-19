@@ -59,6 +59,7 @@ module.exports = function(pugs, dir, options = {}) {
 				constructor(frag) {
 					Object.assign(this, {
 						children: [...frag.children],
+						childNodes: [...frag.childNodes],
 						id: {},
 						class: {},
 						firstClass: {},
@@ -116,6 +117,22 @@ module.exports = function(pugs, dir, options = {}) {
 					}
 
 					parse.call(this, this.children);
+				}
+
+				get firstChild() {
+					return this.childNodes[0];
+				}
+
+				get firstElementChild() {
+					return this.children[0];
+				}
+
+				get lastChild() {
+					return this.childNodes[this.childNodes.length - 1];
+				}
+
+				get lastElementChild() {
+					return this.children[this.children.length - 1];
 				}
 
 				querySelector(str) {
