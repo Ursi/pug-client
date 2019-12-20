@@ -33,7 +33,6 @@ module.exports = function(pugs, dir, options = {}) {
 					` + script;
 
 				pugObj.script = `async function(locals = {}) {${script}}`
-				console.log(pugObj.script);
 			} else pugObj.purePug = pugObj.pug;
 
 			templatesString += `
